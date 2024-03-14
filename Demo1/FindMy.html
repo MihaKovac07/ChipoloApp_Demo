@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Chipolo demo</title>
+    <link rel="stylesheet" href="FindMy.css">
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD1xKnRe36gCt_pwDyiTuhe3CJItdBVXdI&callback=initMap&libraries=&v=weekly" defer></script>
+</head>
+<body>
+    <div class="placeholder">
+        <div id="map"></div>
+        <div class="podatki">
+            <div class="find">
+                <button class="find-button" onclick="playMusic()">Play Video 2</button>
+                <img class="stop" src="SlikeDemo2/FindMy-stop.png" alt="" style="opacity: 0; pointer-events: none;">
+            </div>
+            <div class="popup" id="popup">
+                <img class="popup-img" src="SlikeDemo2/popup-bell.png" alt="">
+                <p class="popup-p">Chipolo is ringing</p>
+            </div>
+        </div>
+    </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            let play = document.querySelector(".find-button");
+            let stopImage = document.querySelector(".stop");
+            let audio = new Audio("chipolo.mp3");
+            let isPlaying = false;
+
+            function playMusic() {
+                console.log("playMusic() function called");
+                if (!isPlaying) {
+                    play.innerText = "RING TO FIND";
+                    play.style.backgroundColor = "";
+                    audio.play();
+                    isPlaying = true;
+                    toggle(); 
+                    stopImage.style.opacity = "1";
+                    setTimeout(function() {
+                        audio.pause();
+                        isPlaying = false;
+                    }, 3000);
+                }
+            }
+
+            play.addEventListener("click", playMusic);
+        });
+
+
+        function toggle(){
+            var popup = document.getElementById("popup")
+            popup.classList.toggle("active");
+
+            setTimeout(function() {
+                playVideo();
+            }, 3000);
+        }
+
+        function playVideo() {
+            var video = document.createElement('video');
+            video.src = 'part2.mp4'; 
+            video.autoplay = true;
+            document.body.appendChild(video);
+            openFullscreen(video);
+        }
+
+        function openFullscreen(elem) {
+            if (elem.requestFullscreen) {
+                elem.requestFullscreen();
+            } else if (elem.mozRequestFullScreen) {
+                elem.mozRequestFullScreen();
+            } else if (elem.webkitRequestFullscreen) { 
+                elem.webkitRequestFullscreen();
+            } else if (elem.msRequestFullscreen) { 
+                elem.msRequestFullscreen();
+            }
+        }
+
+    </script>
+    <script src="ChipoloMap2.js"></script>
+</body>
+</html>
